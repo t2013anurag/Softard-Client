@@ -1,0 +1,31 @@
+.form-search {
+margin-left: 114px;
+width: 500px!important;
+}
+.container {
+  width: 980px!important;
+  margin-right: auto!!important;
+  margin-left: auto!important;
+}
+.two {
+  width: 66.67%;
+}
+.one {
+  width: 33.33%;
+}
+.column {
+    float: left;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.nav-tabs-center {
+  padding-left: 500px;
+  margin-top: -40px;
+}
+
+width: 100px;
+height: 100px;
+background: red;
+-moz-border-radius: 50px;
+-webkit-border-radius: 50px;
+border-radius: 50px;

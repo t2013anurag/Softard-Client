@@ -33,8 +33,15 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage'
+    view: 'index'
+  },
+  '/login/authenticate' : 'UserController.authenticate',
+  '/file/upload' : 'UserController.uploadphoto',
+  '/sendsms' : 'LoginController.sendsms',
+  '/dashboard' : {
+    view : 'partial/dashboard'
   }
+
 
   /***************************************************************************
   *                                                                          *
