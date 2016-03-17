@@ -23,7 +23,7 @@ $(document).ready(function(){
             console.log(value);
             $('#error-msg').hide();
             $('#success-msg').show();
-            $('#user-name').val(""); // setting values to null string
+            $('#user-name').val(""); //setting values to null
             $('#user-email').val("");
             $('#query').val("");
           } else {
