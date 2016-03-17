@@ -5,88 +5,172 @@
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-    <!--
-        Stylesheets and Preprocessors
-        ==============================
-
-        You can always bring in CSS files manually with `<link>` tags, or asynchronously
-        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
-        of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-        By default, stylesheets from your `assets/styles` folder are included
-        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
-        are supported. In production, your styles will be minified and concatenated into
-        a single file.
-
-        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-        For example, here are a few things you could do:
-
-            + Change the order of your CSS files
-            + Import stylesheets from other directories
-            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-    -->
-
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/importer.css">
     <link rel="stylesheet" href="/styles/main.css">
     <!--STYLES END-->
+    <style>
+    .navbar {
+      border: none!important;
+    }
+    .navbar-brand {
+      margin-left: 151px!important;
+    }
+    .input {
+      padding: 10px;
+      border-radius: 3px;
+      border: 1px solid #ddd;
+      width: 45%;
+      margin-left: 160px;
+      margin-bottom: 15px;
+    }
+    .btn-login {
+      width: 45%;
+      padding: 10px;
+      margin-left: 8px;
+      background: #777;
+      color: white;
+    }
+    .btn-login:hover {
+      color: white;
+    }
+    .social-login img {
+        width: 45%;
+        margin-bottom: 10px;
+        margin-left: 160px;
+    }
+    .divider-border {
+        border-top: 1px solid #e5e5e5;
+        padding-top: 10px;
+    }
+    </style>
   </head>
-
   <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/home">Softard</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control form-search" placeholder="Search">
+            </div>
+          </form>
+          <ul class="nav navbar-nav column navbar-neg-space">
+            <li><a href="/contact">Help</a></li>
+            <% if(req.session.authenticated) { %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi, <%= req.session.User.username %><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/settings">Settings</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/contact">Contact</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+            </li>
+            <% } else { %>
+                <li><a href="#loginModal" data-toggle = "modal" data-target="#loginModal">Login to Softard</a></li>
+              <% } %>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <br><br>
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Login to Softard</h4>
+          </div>
+          <div class="modal-body">
+            <div class="social-login">
+              <img src="/images/fb-btn.png"><br>
+              <img src="/images/google-btn.png">
+            </div>
+            <form action="/login/authenticate" class="divider-border" method="POST">
+              <h4 style="text-align:center">Login using your email </h4>
+              <div class="input-field col s12">
+                <input type="text"  name="username" id="username" class="input" placeholder="Your username here *">
+              </div>
+              <div class="input-field col s12">
+                <input type="password"  name="password" id="password" class="input" placeholder="Your Password here *">
+              </div>
+              <div class="input-field col s12">
+                <p style="text-align:center"><input type="submit" class="btn btn-submit btn-login" value="Log In"></p>
+              </div>
+              <!-- <div class="input-field col s12 ">
+               <input type="text" name="email" id="email" placeholder="    Your Message here *">
+             </div> -->
+            </form>
+          </div>
+          <div class="modal-footer">
+       <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle = "modal" data-target="#signupModal">New to Softard?</button>
+     </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Signup to Softard</h4>
+          </div>
+          <div class="modal-body">
+            <div class="social-login">
+              <img src="/images/fb-btn.png"><br>
+              <img src="/images/google-btn.png">
+            </div>
+            <form action="/login/signup" class="divider-border" method="POST">
+              <h4 style="text-align:center">Sign-up using your email </h4>
+              <div class="input-field col s12">
+                <input type="text"  name="username" id="username" class="input" placeholder="Your username here *">
+              </div>
+              <div class="input-field col s12">
+                <input type="text"  name="email" id="email" class="input" placeholder="Your email here *">
+              </div>
+              <div class="input-field col s12">
+                <input type="text"  name="name" id="name" class="input" placeholder="Your name here *">
+              </div>
+              <div class="input-field col s12">
+                <input type="password"  name="password" id="password" class="input" placeholder="Your Password here *">
+              </div>
+              <div class="input-field col s12">
+                <input type="password"  name="cpassword" id="cpassword" class="input" placeholder="Confirm Password *">
+              </div>
+              <div class="input-field col s12">
+                <p style="text-align:center"><input type="submit" class="btn btn-submit btn-login" value="Sign-up"></p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+       <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Already Registered?</button>
+     </div>
+        </div>
+      </div>
+    </div>
+
     <%- body %>
 
-
-    <!--
-        Client-side Templates
-        ========================
-
-        HTML templates are important prerequisites of modern, rich client applications.
-        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
-        that you load these templates client-side.
-
-        By default, your Gruntfile is configured to automatically load and precompile
-        client-side JST templates in your `assets/templates` folder, then
-        include them here automatically (between TEMPLATES and TEMPLATES END).
-
-        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
-        For example, here are a few things you could do:
-
-            + Import templates from other directories
-            + Use a different template engine (handlebars, jade, dust, etc.)
-            + Internationalize your client-side templates using a server-side
-              stringfile before they're served.
-    -->
-
-    <!--TEMPLATES-->
-    
-    <!--TEMPLATES END-->
-
-
-    <!--
-
-      Client-side Javascript
-      ========================
-
-      You can always bring in JS files manually with `script` tags, or asynchronously
-      on the client using a solution like AMD (RequireJS).  Or, if you like, you can
-      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-      By default, files in your `assets/js` folder are included here
-      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
-      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
-      and concatenated into a single file.
-
-      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-      For example, here are a few things you could do:
-
-          + Change the order of your scripts
-          + Import scripts from other directories
-          + Use a different preprocessor, like TypeScript
-
-    -->
 
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>

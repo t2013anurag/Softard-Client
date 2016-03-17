@@ -41,7 +41,7 @@ module.exports = {
 						 req.session.User = user;
 						 req.session.reply = reply;
 						 //console.log(req.session.User.name);
-						 res.redirect('/dashboard');
+						 res.redirect('/');
 					 } else {
 						 req.session.flash = {
 							err :	"Sorry, we may've encountered a problem. We are on it!"
@@ -57,9 +57,52 @@ module.exports = {
 
 		 }
 	 } else { // i.e. valid user who is already authenticated
-		 res.redirect('/dashboard');
+		 res.redirect('/');
 	 }
  },
+
+'signup' : function(req, res) {
+	if(req.param('username') && req.param('email') && req.param('password') && req.param('name')) {
+		var username = req.param('username');
+		var email = req.param('email');
+		var name = req.param('name');
+		var password = req.param('password');
+		console.log(username + email + password + name);
+
+		var http = require('http'), options = {
+			host: "localhost",
+			port: 1337,
+			path: "/user/signup?username="+username+"&password="+password+"&email="+email+"&name="+name,
+			method: "GET"
+		};
+		var data = "";
+		var request = http.get(options, function(response){
+			response.on('error', function(){
+				console.log('error');
+			});
+			response.on('data', function(chunk){
+				data += chunk;
+			});
+			response.on('end', function(){
+				var reply = data;
+				console.log(reply);
+				reply = JSON.parse(reply);
+				if(reply.status === 111){
+					var user = reply.user;
+					req.session.authenticated = true;
+					req.session.user = reply.user;
+					res.redirect('/');
+				} else {
+					res.redirect('/');
+				}
+			});
+		});
+	} else {
+		res.redirect('/');
+	}
+},
+
+
 
  'uploadphoto' : function(req, res) {
 		if(req.session.authenticated){
@@ -111,4 +154,51 @@ module.exports = {
 		 res.status(200).json(reply);
 	 }
  },
+
+
+
+ 'complain' : function(req, res) {
+	 if(req.param('email') && req.param('query')) {
+		 var email = req.param('email');
+		 var query = req.param('query');
+		 var name = req.param('name');
+		 var http = require('http'), options = {
+			 host: "localhost",
+			 port: 1337,
+			 path: "/complain/complain?email="+email+"&query="+query+"&name="+name,
+			 method: "GET"
+		 };
+		 var data = "";
+		 var request = http.get(options, function(response){
+			 response.on('error', function(){
+				 console.log('error');
+			 });
+			 response.on('data', function(chunk){
+				 data += chunk;
+			 });
+			 response.on('end', function(){
+				 var reply = data;
+				 reply = JSON.parse(reply);
+/******************Checking for the status of reply received*******************/
+				 // Status code : 105 means users is valid
+				 if(reply.status === 125){
+					 //console.log(req.session.User.name);
+					 res.redirect('/contact');
+				 } else {
+					 var reply = {
+						'status' : 299,
+						'message' : 'Could not be done'
+					};
+					res.status(200).json(reply);
+				 }
+			 });
+		 }); // request finished
+	 } else {
+		 var reply = {
+			 'status' : 199,
+			 'message' : 'Could not be done'
+		 };
+		 res.status(200).json(reply);
+	 }
+ }
 };

@@ -1,6 +1,6 @@
 .form-search {
-margin-left: 114px;
-width: 500px!important;
+/*margin-left: 114px;*/
+width: 440px!important;
 }
 .container {
   width: 980px!important;
@@ -22,10 +22,6 @@ width: 500px!important;
   padding-left: 500px;
   margin-top: -40px;
 }
-
-width: 100px;
-height: 100px;
-background: red;
--moz-border-radius: 50px;
--webkit-border-radius: 50px;
-border-radius: 50px;
+.navbar-neg-space {
+    margin-left: 21%;
+}

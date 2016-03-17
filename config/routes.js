@@ -36,11 +36,23 @@ module.exports.routes = {
     view: 'index'
   },
   '/login/authenticate' : 'UserController.authenticate',
+  '/login/signup' : 'UserController.signup',
   '/file/upload' : 'UserController.uploadphoto',
   '/sendsms' : 'LoginController.sendsms',
-  '/dashboard' : {
+  '/profile' : {
     view : 'partial/dashboard'
-  }
+  },
+  '/home' : {
+    view : 'index'
+  },
+  '/logout' : 'LogoutController.index',
+  '/settings' : {
+    view : 'partial/settings'
+  },
+  '/contact' : {
+    'view' : 'partial/contact'
+  },
+  '/register/complain' : 'UserController.complain',
 
 
   /***************************************************************************
