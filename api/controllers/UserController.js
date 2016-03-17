@@ -158,7 +158,7 @@ module.exports = {
 
 
  'complain' : function(req, res) {
-	 if(req.param('email') && req.param('query')) {
+	 if(req.param('email') && req.param('query') && req.param('name')) {
 		 var email = req.param('email');
 		 var query = req.param('query');
 		 var name = req.param('name');
@@ -183,11 +183,15 @@ module.exports = {
 				 // Status code : 105 means users is valid
 				 if(reply.status === 125){
 					 //console.log(req.session.User.name);
-					 res.redirect('/contact');
+					 var reply = {
+						 'status' : 100,
+						 'message' : 'Successfully registered te complain'
+					 };
+					 res.status(200).json(reply);
 				 } else {
 					 var reply = {
-						'status' : 299,
-						'message' : 'Could not be done'
+						'status' : 101,
+						'message' : 'Could not register the complain'
 					};
 					res.status(200).json(reply);
 				 }
@@ -195,8 +199,8 @@ module.exports = {
 		 }); // request finished
 	 } else {
 		 var reply = {
-			 'status' : 199,
-			 'message' : 'Could not be done'
+			 'status' : 102,
+			 'message' : 'Please make sure you fill all the fields'
 		 };
 		 res.status(200).json(reply);
 	 }
