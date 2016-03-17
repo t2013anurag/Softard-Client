@@ -50,9 +50,15 @@ module.exports.routes = {
     view : 'partial/settings'
   },
   '/contact' : {
-    'view' : 'partial/contact'
+    view : 'partial/contact'
   },
   '/register/complain' : 'UserController.complain',
+  '/profile-settings' : {
+    view : 'partial/profile-settings',
+    locals : {
+      layout : 'ajaxLayout'
+    }
+  }
 
 
   /***************************************************************************

@@ -20,7 +20,6 @@ $(document).ready(function(){
         success: function(data) {
           if(data.status === 100) {
             var value = data.status;
-            console.log(value);
             $('#error-msg').hide();
             $('#success-msg').show();
             $('#user-name').val(""); //setting values to null
@@ -40,6 +39,11 @@ $(document).ready(function(){
     });
 });
 
+$("#profile-settings").click(function(){
+    $.get('/profile-settings', function (template) {
+             $('#results123').html(template);
+      });
+})
 
 
 
