@@ -91,6 +91,7 @@ module.exports = {
 					var user = reply.user;
 					req.session.authenticated = true;
 					req.session.user = reply.user;
+					req.session.User = user;
 					res.redirect('/');
 				} else {
 					res.redirect('/');
@@ -101,8 +102,6 @@ module.exports = {
 		res.redirect('/');
 	}
 },
-
-
 
  'uploadphoto' : function(req, res) {
 		if(req.session.authenticated){
@@ -204,5 +203,63 @@ module.exports = {
 		 };
 		 res.status(200).json(reply);
 	 }
- }
+ },
+
+
+	 'update' : function(req, res) {
+		 if(req.session.authenticated) {
+			 var name = req.param('name');
+			 console.log(name);
+			 var email = req.param('email');
+			 var website = req.param('website');
+			 var mobile = req.param('mobile');
+			 var about = req.param('about');
+			 var username = req.session.User.username;
+
+			 var http = require('http'), options = {
+				 host : "localhost",
+				 port : 1337,
+				 path : "/user/updateprofile?username="+username+"&name="+name+"&email="+email+"&website="+website+"&mobile="+mobile+"&about="+about,
+				 method : "GET"
+			 };
+			 var data = "";
+			 var request = http.get(options, function(response){
+				 response.on('error', function(){
+					 console.log('error');
+				 });
+				 response.on('data' , function(chunk){
+					 data += chunk;
+				 });
+				 response.on('end', function(){
+					 var reply = data;
+					 reply = JSON.parse(reply);
+					  console.log(reply);
+					 if(reply.status === 130) {
+						 req.session.authenticated = true;
+						 req.session.User = reply.user[0];
+						 var callerreply = {
+							 'status' : 100,
+							 'message' : 'Successfully updated the user details'
+						 };
+						 res.status(200).json(callerreply);
+					 }  else {
+						 var callerreply = {
+							 'status' : 202,
+							 'message' : 'An error occured while updating the user details'
+						 };
+						 res.status(200).json(callerreply);
+					 }
+				 });
+			 });
+		 } else {
+			 var callerreply = {
+				 'status' : 103,
+				 'message' : 'Please login'
+			 };
+			 res.status(200).json(callerreply);
+		 }
+	 }
+
+
+
 };

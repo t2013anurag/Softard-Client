@@ -5,6 +5,13 @@
 .complain-btn {
   margin-bottom: 10px;
 }
+.query {
+  width: 80%!important;
+}
+a {
+  text-decoration: none;
+  color: #333;
+}
 </style>
 <div class="container">
   <h2>Contact Softard</h2>
@@ -17,7 +24,7 @@
         <input type="text" class="form-control" id="user-name" name="user-name" value=<%= req.session.User.name %>>
         <% } else { %>
         <input type="text" class="form-control" id="user-name" name="user-name" placeholder="Your name">
-          <% } %>
+        <% } %>
       </div>
       <div class="form-group">
         <label for="email">Email address</label>
@@ -25,14 +32,12 @@
         <input type="email" class="form-control" id="user-email" name="user-email" value=<%= req.session.User.email %>>
         <% } else { %>
         <input type="email" class="form-control" id="user-email" name="user-email" placeholder="Your email">
-          <% } %>
+        <% } %>
       </div>
       <div class="form-group">
           <label for="question">Your question</label>
-        <textarea class="form-control" id="query" name="query" rows="5"></textarea>
+        <textarea class="form-control query" id="query" name="query" rows="5"></textarea>
       </div>
-
-          <span id="loader-icon"><img src="/images/loader.gif" style="display:none"/></span>
       <button type="submit" class="btn btn-default complain-btn" id="send-complain">Submit</button>
       <div class="alert alert-success" id="success-msg" style="display:none">
         <strong>Voila!</strong> We have received your request.
