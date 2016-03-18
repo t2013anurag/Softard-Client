@@ -67,10 +67,11 @@
             </div>
           </form>
           <ul class="nav navbar-nav column navbar-neg-space">
-            <li><a href="/contact">Help</a></li>
             <% if(req.session.authenticated) { %>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi, <%= req.session.User.username %><span class="caret"></span></a>
+            <li class="dropdown" style="margin-left:50px;">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="float:right;padding:0px;">
+                  <img src= "<%= req.session.User.avatar%>" style="width:49px;">
+                <span class="caret" style="margin-right:5px;"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/settings">Settings</a></li>

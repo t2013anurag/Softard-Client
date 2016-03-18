@@ -107,13 +107,13 @@ module.exports = {
 		if(req.session.authenticated){
 		 var username = req.session.User.username;
 		 var file = req.param('avatar');
-		 var avatarimg = '/assets/images/'+username;
-		 var avatarUrl =  require('util').format('%s/user/%s', sails.getBaseUrl(),req.session.User.username);
+		 var avatarimg = '/images/'+username+'/'+username+'.jpg';
+		 var avatarUrl =  require('util').format('%s/images/%s/%s.jpg', sails.getBaseUrl(),req.session.User.username,req.session.User.username);
 		 res.setTimeout(0);
 			 req.file('avatar')
 			 .upload({
 				 dirname : '../.../../../assets/images/'+username,
-				 saveAs : 'avatar',
+				 saveAs : username+".jpg",
 				 // You can apply a file upload limit (in bytes)
 				 maxBytes: 1000000
 			 }, function whenDone(err, uploadedFiles) {
@@ -135,12 +135,13 @@ module.exports = {
 						 };
 						 res.status(200).json(reply);
 					 } else {
-						 var reply = {
-							 'status' : 122,
-							 'message' : 'Done',
-							 'files' : uploadedFiles
-						 };
-						 res.status(200).json(reply);
+						 res.redirect('/settings');
+						//  var reply = {
+						// 	 'status' : 122,
+						// 	 'message' : 'Done',
+						// 	 'files' : uploadedFiles
+						//  };
+						//  res.status(200).json(reply);
 					 }
 				 });
 				 }
@@ -182,6 +183,7 @@ module.exports = {
 				 // Status code : 105 means users is valid
 				 if(reply.status === 125){
 					 //console.log(req.session.User.name);
+					 req.session.User.avatar = avatar;
 					 var reply = {
 						 'status' : 100,
 						 'message' : 'Successfully registered te complain'
@@ -209,17 +211,16 @@ module.exports = {
 	 'update' : function(req, res) {
 		 if(req.session.authenticated) {
 			 var name = req.param('name');
-			 console.log(name);
 			 var email = req.param('email');
 			 var website = req.param('website');
 			 var mobile = req.param('mobile');
 			 var about = req.param('about');
 			 var username = req.session.User.username;
-
+			 var profession = req.param('profession');
 			 var http = require('http'), options = {
 				 host : "localhost",
 				 port : 1337,
-				 path : "/user/updateprofile?username="+username+"&name="+name+"&email="+email+"&website="+website+"&mobile="+mobile+"&about="+about,
+				 path : "/user/updateprofile?username="+username+"&name="+name+"&email="+email+"&website="+website+"&mobile="+mobile+"&about="+about+"&profession="+profession,
 				 method : "GET"
 			 };
 			 var data = "";
@@ -233,13 +234,13 @@ module.exports = {
 				 response.on('end', function(){
 					 var reply = data;
 					 reply = JSON.parse(reply);
-					  console.log(reply);
 					 if(reply.status === 130) {
 						 req.session.authenticated = true;
 						 req.session.User = reply.user[0];
 						 var callerreply = {
 							 'status' : 100,
-							 'message' : 'Successfully updated the user details'
+							 'message' : 'Successfully updated the user details',
+							 'user' : reply.user[0]
 						 };
 						 res.status(200).json(callerreply);
 					 }  else {
