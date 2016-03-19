@@ -58,6 +58,9 @@ module.exports.routes = {
     locals : {
       layout : 'ajaxLayout'
     }
+  },
+  '/create-post' : {
+    view : 'partial/create-post'
   }
 
 
