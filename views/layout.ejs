@@ -68,14 +68,31 @@
           </form>
           <ul class="nav navbar-nav column navbar-neg-space">
             <% if(req.session.authenticated) { %>
-            <li class="dropdown" style="margin-left:50px;">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span class="glyphicon glyphicon-plus" style="margin-right:-4px;margin-left:7px;"></span>
+                  <span class="caret" style="margin-right:-2px;"></span>
+                </a>
+              <ul class="dropdown-menu">
+                <li><a href="/create-post">Create</a></li>
+                <li><a href="/viewall">View All</a></li>
+                <li><a href="#">Contributions</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/contact">Found a Bug?</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <% if(req.session.User.avatar) {%>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="float:right;padding:0px;">
                   <img src= "<%= req.session.User.avatar%>" style="width:49px;">
+              <% } else { %>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="float:right;padding:15px;">
+                  <%= req.session.User.name %>
+              <% } %>
                 <span class="caret" style="margin-right:5px;"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/settings">Settings</a></li>
-                <li><a href="#">Something else here</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="/contact">Contact</a></li>
                 <li role="separator" class="divider"></li>

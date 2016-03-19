@@ -1,0 +1,130 @@
+<style>
+input {
+  border:1px solid #ccc;
+  padding:8px;
+  font-size:14px;
+  width:100%;
+  }
+
+.submit {
+  width:110px;
+  background-color:#FF6;
+  padding:3px;
+  border:1px solid #FC0;
+  margin-top:15px;
+  margin-bottom: 15px;
+}
+.field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.nav-li>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 44px;
+}
+.nav-tabs {
+      margin-left: -63px;
+}
+.table {
+      border: 2px solid #ddd;
+}
+.table>tbody>tr>td{
+  padding: 11px!important;
+}
+.glyphicon {
+  margin-right: 15px;
+}
+.badge {
+  margin-left: 10px;
+}
+.table>thead>tr>th {
+  text-align: center;
+  padding: 3px;
+  font-size: 19px;
+  background: #ddd;
+  color: #777;
+}
+a {
+  text-decoration: none;
+  color: #333;
+}
+a:hover {
+    text-decoration: underline;
+    color: #a94442;
+}
+a:focus {
+  text-decoration: none;
+  color: #333;
+}
+p {
+  font-size: 14px;
+}
+</style>
+
+<div class="container">
+    <div class="two column">
+        <table class="table">
+          <thead>
+              <tr>
+                <% if(post) {%>
+                <th><%= post.title %></th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="form-group">
+                  <label for="description">Description : </label>
+                  <div class="post-title"><p><%= post.shortdesc %></p></div>
+                </div>
+                <div class="form-group">
+                  <label for="tags">Tags : </label>
+                  <%= post.tags %>
+                </div>
+                <div class="form-group">
+                  <label for="platform">Platform : </label>
+                  <%= post.platform %>
+                </div>
+                <div id="inner_wrap"> <%= post.steps[1]  %>
+                    <label for="steps">Steps : </label>
+                    <% var count = 0; var steps = post.steps; %>
+                    <% _.each(steps, function(postx){ %>
+                      <div class="post-steps"><p><%= postx %></p></div>
+                      <% }); %>
+                </div>
+              </td>
+            </tr>
+            <% } else {%>
+
+                <div class="alert alert-danger" id="error-msg">
+                  <strong>OOPS!</strong> Looks like it's lonely in here. Create you own post <a href="/create-post"> <span style="color:#a94442">here</span></a>.
+                </div>
+
+              <% }%>
+          </tbody>
+        </table>
+    </div>
+    <div class="one column" style="position:relative">
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Weird Tips</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-hand-right"></span>You can create your own posts. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Raise an issue or ask a question.<br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Active developers get brownies from us. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Something wrong with us? Report in contact page. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Add suitable tags to make your work visible to more and more developers. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Don't forget to publish your work. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Find, Create, Share. <br><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

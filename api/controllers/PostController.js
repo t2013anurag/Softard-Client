@@ -114,4 +114,112 @@ module.exports = {
 			res.status(200).json(reply);
 		}
 	},
+
+	viewall : function(req, res) {
+		if(req.session.authenticated) {
+			var post_list = [];
+			var count = 0;
+			var username = req.session.User.username;
+			var http = require('http'), options = {
+				host: "localhost",
+				port: 1337,
+				path: "/post/viewpostbyauthor?username="+username,
+				method: "GET"
+			};
+			var data = "";
+			var request = http.get(options, function(response){
+				response.on('error', function(){
+					console.log('error');
+				});
+				response.on('data', function(chunk){
+					data += chunk;
+				});
+				response.on('end', function(){
+					var reply = data;
+					reply = JSON.parse(reply);
+					if(reply.status === 207){
+						var item = reply.post;
+						var length = item.length;
+						if(length > 0) {
+							_.each(item, function(post){
+								  var items = {
+										'title' : post.title,
+										'author' : post.author,
+										'shortdesc' : post.shortdesc,
+										'platform' : post.platform,
+										'steps' : post.steps,
+										'tags' : post.tags,
+										'username' : post.username
+									}
+									post_list.push(items);
+									count += 1;
+									if(count < length) {
+										return;
+									} else {
+										res.view({post_list : post_list});
+									}
+							});
+						} else {
+							var reply = {
+								'status' :901,
+								'message' : 'No posts for this user'
+							};
+							res.view({post_list: post_list});
+						}
+					} else {
+						var reply = {
+						 'status' : 902,
+						 'message' : 'Could not fetch the posts'
+					 };
+					 res.view({post_list: post_list});
+					}
+				});
+			}); // request finished
+
+		} else {
+			var reply = {
+				'status' : 903,
+				'message' : 'Please login'
+			};
+			res.view({post_list : post_list});
+		}
+	},
+
+	'view' : function(req, res) {
+		// var title = req.param('id');
+		var username = req.param('username');
+		var title = req.param('title');
+		var id = req.param('id');
+		var http = require('http'), options = {
+			host: "localhost",
+			port: 1337,
+			path: "/post/viewpostbyid?id="+id,
+			method: "GET"
+		};
+		var data = "";
+		var request = http.get(options, function(response){
+			response.on('error', function(){
+				console.log('error');
+			});
+			response.on('data', function(chunk){
+				data += chunk;
+			});
+			response.on('end', function(){
+				var reply = data;
+				reply = JSON.parse(reply);
+				if(reply.status === 207){
+					var post = reply.post;
+					console.log(post);
+					res.view({post : post});
+
+				} else {
+					var reply = {
+					 'status' : 902,
+					 'message' : 'Could not fetch the post'
+				 };
+				 res.view({post : post});
+				}
+			});
+		}); // request finished
+	}
 };

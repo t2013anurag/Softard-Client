@@ -61,7 +61,19 @@ module.exports.routes = {
   },
   '/create-post' : {
     view : 'partial/create-post'
-  }
+  },
+  '/viewall' : {
+    controller : 'PostController',
+    action : 'viewall'
+  },
+  // '/post/view/:title' : {
+  //   controller : 'PostController',
+  //   action : 'view'
+  // },
+  '/post/view/:username/:title/:id' : {
+    controller : 'PostController',
+    action : 'view'
+  },
 
 
   /***************************************************************************

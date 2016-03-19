@@ -46,20 +46,21 @@ input {
   color: #777;
 }
 a {
-  text-decoration: none;
+  text-decoration: none!important;
   color: #333;
 }
 a:hover {
-    text-decoration: none;
+    text-decoration: none!important;
     color: #333;
 }
 a:focus {
-  text-decoration: none;
+  text-decoration: none!important;
   color: #333;
 }
 </style>
 
 <div class="container">
+  <% if(req.session.authenticated) {%>
     <div class="two column">
         <table class="table">
           <thead>
@@ -118,7 +119,29 @@ a:focus {
             </tr>
           </tbody>
         </table>
-    </div>
+      </div>
+        <% } else { %>
+          <div class="two column">
+              <table class="table">
+                <thead>
+                    <tr>
+                      <th>We've got a small problem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="alert alert-danger" data-toggle = "modal" data-target="#loginModal" id="error-msg" style="cursor:pointer">
+                        <strong>OOPS!</strong> Please login or signup before creating the post.
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+          <% } %>
+
+
     <div class="one column" style="position:relative">
       <table class="table table-hover">
         <thead>
