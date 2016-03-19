@@ -11,7 +11,8 @@ input {
   background-color:#FF6;
   padding:3px;
   border:1px solid #FC0;
-  margin-top:20px;
+  margin-top:15px;
+  margin-bottom: 15px;
 }
 .field {
   width: 100%;
@@ -57,64 +58,87 @@ a:focus {
   color: #333;
 }
 </style>
+
 <div class="container">
-  <div class="two coloumn">
-    <table class="table table-hover">
-      <thead>
-          <tr>
-            <th>Create Post</th>
-          </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="form-group">
-              <label for="title">Title <span style="color:grey">(Ex. How to install NodeJs)</span></label>
-              <input type="text" class="form-control" id="post-title" name="post-title" placeholder="How to ?">
-            </div>
-            <div class="form-group">
-              <label for="short-desc">Short Description</label>
-              <input type="text" class="form-control" id="post-short" name="post-short" placeholder="What is NodeJS etc.">
-            </div>
-            <div class="form-group">
-              <label for="tags">Tags</label>
-              <input type="text" class="form-control" id="post-tags" name="post-tags" placeholder="Tags separated by comma">
-            </div>
-            <div class="form-group">
-              <label for="sel1">Choose Platform:</label>
-              <select class="form-control" id="sel1">
-                <option value="windows">Windows</option>
-                <option value="linux">Linux</option>
-                <option value="osx">OSX</option>
-              </select>
-            </div>
-            <div id="inner_wrap">
-                <label for="steps">Add the steps : </label>
-              <div class="dynamic-form">
-                <div class="options-steps">
-                  <a href="#" id="add">Add more</a> | <a href="#" id="remove">Remove last step</a>
+    <div class="two column">
+        <table class="table">
+          <thead>
+              <tr>
+                <th>Installing NodeJs in Windows</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="form-group">
+                  <label for="title">Title <span style="color:grey">(Ex. How to install NodeJs)</span></label>
+                  <input type="text" class="form-control" id="post-title" name="post-title" placeholder="How to ?">
                 </div>
-                <div class="steps">
-                  <div class="inputs">
-                    <div>
-                      <!-- <input type="text" name="dynamic[]" class="field" value="1"/> -->
-                      <textarea name="dynamic[]" class="field" value="1"></textarea>
+                <div class="form-group">
+                  <label for="short-desc">Short Description</label>
+                  <input type="text" class="form-control" id="post-short" name="post-short" placeholder="What is NodeJS etc.">
+                </div>
+                <div class="form-group">
+                  <label for="tags">Tags</label>
+                  <input type="text" class="form-control" id="post-tags" name="post-tags" placeholder="Tags separated by comma">
+                </div>
+                <div class="form-group">
+                  <label for="sel1">Choose Platform:</label>
+                  <select class="form-control" id="sel1">
+                    <option value="windows">Windows</option>
+                    <option value="linux">Linux</option>
+                    <option value="osx">OSX</option>
+                  </select>
+                </div>
+                <div id="inner_wrap">
+                    <label for="steps">Add the steps : </label>
+                  <div class="dynamic-form">
+                    <div class="options-steps">
+                      <a href="#" id="add">Add more</a> | <a href="#" id="remove">Remove last step</a>
+                    </div>
+                    <div class="steps">
+                      <div class="inputs">
+                        <div>
+                          <!-- <input type="text" name="dynamic[]" class="field" value="1"/> -->
+                          <textarea name="dynamic[]" class="field" value="1"></textarea>
+                        </div>
+                      </div>
+                      <!-- <input name="preview" type="button" class="preview" value="Preview" /> -->
                     </div>
                   </div>
-                  <!-- <input name="preview" type="button" class="preview" value="Preview" /> -->
                 </div>
-              </div>
-            </div>
-              <input name="submit" type="button" class="submit" value="Submit" />
-              <div class="alert alert-success" id="success-msg" style="display:none">
-                <strong>Voila!</strong> We have successfully updated your profile.
-              </div>
-              <div class="alert alert-danger" id="error-msg" style="display:none">
-                <strong>OOPS!</strong> We are facing some technical difficulties. Please try again after some time.
-              </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-</div>
+                  <input name="submit" type="button" class="submit" value="Publish" />
+                  <div class="alert alert-success" id="success-msg" style="display:none">
+                    <strong>Voila!</strong> We have successfully published your post.
+                  </div>
+                  <div class="alert alert-danger" id="error-msg" style="display:none">
+                    <strong>OOPS!</strong> We are facing some technical difficulties. Please try again after some time.
+                  </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <div class="one column" style="position:relative">
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Quick Tips</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-hand-right"></span>Always remember to give a suitable title. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Your post is automatically saved after every 30 seconds. (Take your time, there's no hurry).<br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Extra brownie points for contribution to more than one platform. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Be as simple as possible. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Add suitable tags to make your work visible to more and more developers. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Don't forget to publish your work. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>You can add any number of steps as you need. <br><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 </div>

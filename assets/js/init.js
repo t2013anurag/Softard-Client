@@ -41,18 +41,11 @@ $(document).ready(function(){
   var shortdesc = $("#post-short").val();
   var tags = $("#post-tags").val();
   tags = tags.replace(/ /g, '');
-  console.log("updated tags" + tags);
   var platform = $('#sel1').val();
   shortdesc = shortdesc.replace(/ /g,'-');
   title = title.replace(/ /g,'-');
   var tagsarr = [];
   tagsarr = tags.split(",");
-  console.log(title);
-  console.log(shortdesc);
-  console.log(tagsarr);
-  console.log(platform);
-  console.log(allsteps);
-  // profession = profession.replace(/ /g,'-');
   $.ajax({
     type: 'POST',
     url: '/post/create?',
@@ -61,7 +54,6 @@ $(document).ready(function(){
     success: function(data) {
       if(data.status === 800) {
         var value = data.status;
-        console.log(data);
         $('#error-msg').hide();
         $('#success-msg').show();
         $('#user-name').val(""); //setting values to null
