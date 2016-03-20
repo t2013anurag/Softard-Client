@@ -1,3 +1,4 @@
+<script src="/js/epiceditor.js"></script>
 <style>
 input {
   border:1px solid #ccc;
@@ -62,7 +63,6 @@ p {
 }
 </style>
 
-
 <div class="container">
     <div class="two column">
         <table class="table">
@@ -78,8 +78,12 @@ p {
                 <%if(req.session.authenticated) {%>
                   <% if(req.session.User.username === post.username) { %>
                     <div class="user-edit-delete" style="margin-bottom:30px;">
+                        <a href = "/delete/<%= post.id%>">
                         <button type="submit" class="btn btn-default complain-btn btn-danger" id="delete-post">Delete Post </button>
+                        </a>
+                        <a href = "/post/edit/<%= post.username%>/<%= post.title%>/<%= post.id%>">
                         <button type="submit" class="btn btn-default complain-btn btn-primary" id="delete-post">Edit Post </button>
+                        </a>
                       </div>
                     <% } %>
                   <% }  %>
@@ -98,12 +102,12 @@ p {
                   <label for="platform">Platform : </label>
                   <%= post.platform %>
                 </div>
-                <div id="inner_wrap">
-                    <label for="steps">Steps : </label>
-                    <% var count = 0; var steps = post.steps; %>
-                    <% _.each(steps, function(postx){ %>
-                      <div class="post-steps"><p><%= postx %></p></div>
-                      <% }); %>
+                <div class="form-group">
+                  <label for="editor">Steps:</label>
+                  <div class="inputs" style="border:2px solid #ddd;min-height:300px;">
+                    <div id="epiceditor">
+                    </div>
+                  </div>
                 </div>
               </td>
             </tr>
@@ -140,3 +144,54 @@ p {
       </table>
     </div>
 </div>
+
+<script type="text/javascript">
+  var opts = {
+    container: 'epiceditor',
+    textarea: null,
+    basePath: 'epiceditor',
+    clientSideStorage: true,
+    localStorageName: 'epiceditor',
+    useNativeFullscreen: true,
+    parser: marked,
+    file: {
+      name: 'epiceditor',
+      defaultContent: '',
+      autoSave: 100
+    },
+    theme: {
+      base: '/themes/base/epiceditor.css',
+      preview: '/themes/preview/preview-dark.css',
+      editor: '/themes/editor/epic-dark.css'
+    },
+    button: {
+      preview: true,
+      fullscreen: true,
+      bar: "auto"
+    },
+    focusOnLoad: false,
+    shortcut: {
+      modifier: 18,
+      fullscreen: 70,
+      preview: 80
+    },
+    string: {
+      togglePreview: 'Toggle Preview Mode',
+      toggleEdit: 'Toggle Edit Mode',
+      toggleFullscreen: 'Enter Fullscreen'
+    },
+    autogrow: true
+  }
+  var editor = new EpicEditor(opts).load();
+  console.log(editor.getElement('editor').body.innerHTML);
+    <% if(post) {%>
+  editor.getElement('editor').body.innerHTML = "<%= post.steps%>";
+  <% } %>
+  var files = editor.getFiles();
+  for (x in files) {
+    console.log('File: ' + x); //Returns the name of each file
+  };
+   editor.preview();
+  // var code = editor.getElement('editor').body.innerHTML;
+  console.log(code);
+</script>

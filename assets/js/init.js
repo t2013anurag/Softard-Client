@@ -81,7 +81,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 
 // here's our click function for when the forms submitted
-	$('.submit').click(function(){
+	$('#submit-create').click(function(){
 
 	//alert(allsteps);
   var title = $("#post-title").val();
@@ -121,6 +121,50 @@ $(document).ready(function(){
 	});
 });
 
+
+$(document).ready(function(){
+
+// here's our click function for when the forms submitted
+	$('#submit-edited').click(function(){
+
+	//alert(allsteps);
+  var title = $("#post-title").val();
+  var shortdesc = $("#post-short").val();
+  var tags = $("#post-tags").val();
+  tags = tags.replace(/ /g, '');
+  var platform = $('#sel1').val();
+  shortdesc = shortdesc.replace(/ /g,'-');
+  title = title.replace(/ /g,'-');
+  var allsteps = editor.getElement('editor').body.innerHTML;
+  var id = $("#post-id").val();
+  console.log(id + "is the is");
+  $.ajax({
+    type: 'POST',
+    url: '/post/edit?',
+    data: { 'title' : title, 'shortdesc' : shortdesc, 'tags' : tags, 'platform' : platform, 'allsteps' : allsteps, 'id' : id },
+    dataType: 'json',
+    success: function(data) {
+      if(data.status === 802) {
+        var value = data.status;
+        $('#error-msg').hide();
+        $('#success-msg').show();
+        $('#post-published').hide();
+      } else {
+        var value = data.status;
+        $('#error-msg').show();
+        $('#success-msg').hide();// to hide any previous success messages
+      }
+    },
+    error: function(data) {
+      var value = data.status;
+      $('#success-msg').hide();
+      $('#error-msg').show();
+    }
+  })
+
+	return false;
+	});
+});
 
 
 

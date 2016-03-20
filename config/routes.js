@@ -86,7 +86,14 @@ module.exports.routes = {
     controller : 'PostController',
     action : 'view'
   },
-
+  '/delete/:id' : {
+    controller : 'PostController',
+    action : 'delete'
+  },
+  '/post/edit/:username/:title/:id' : {
+    controller : 'PostController',
+    action : 'editpost'
+  },
 
   /***************************************************************************
   *                                                                          *

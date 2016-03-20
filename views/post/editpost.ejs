@@ -66,7 +66,7 @@
       <table class="table" id = "post-published">
         <thead>
             <tr>
-              <th>Create a post</th>
+              <th>Edit post</th>
             </tr>
         </thead>
         <tbody>
@@ -74,15 +74,16 @@
             <td>
               <div class="form-group">
                 <label for="title">Title <span style="color:grey">(Ex. How to install NodeJs)</span></label>
-                <input type="text" class="form-control" id="post-title" name="post-title" placeholder="How to ?">
+                <input type="text" class="form-control" id="post-title" name="post-title" value = "<%=post.title %>">
               </div>
               <div class="form-group">
                 <label for="short-desc">Short Description</label>
-                <input type="text" class="form-control" id="post-short" name="post-short" placeholder="What is NodeJS etc.">
+                <input type="text" class="form-control" id="post-short" name="post-short" value = "<%=post.shortdesc %>">
               </div>
+              <input type="text" class="form-control" id="post-id" name="post-id" value = "<%=post.id %>" style="display:none">
               <div class="form-group">
                 <label for="tags">Tags</label>
-                <input type="text" class="form-control" id="post-tags" name="post-tags" placeholder="Tags separated by comma">
+                <input type="text" class="form-control" id="post-tags" name="post-tags" value = "<%=post.tags %>">
               </div>
               <div class="form-group">
                 <label for="sel1">Choose Platform:</label>
@@ -99,7 +100,7 @@
                   </div>
                 </div>
               </div>
-                <input name="submit" type="button" class="submit" id ="submit-create" value="Publish" />
+                <input name="submit" type="button" class="submit-edited submit" id ="submit-edited" value="Publish" />
                 <div class="alert alert-danger" id="error-msg" style="display:none">
                   <strong>OOPS!</strong> We are facing some technical difficulties. Please try again after some time.
                 </div>
@@ -109,7 +110,7 @@
       </table>
       <a href="/viewall">
         <div class="alert alert-success" id="success-msg" style="display:none">
-          <strong>Voila!</strong> We have successfully published your post. Visit dashboard to view or edit your post.
+          <strong>Voila!</strong> We have successfully edited your post.
         </div>
       </a>
     </div>
@@ -195,7 +196,9 @@
   }
   var editor = new EpicEditor(opts).load();
   console.log(editor.getElement('editor').body.innerHTML);
-  editor.getElement('editor').body.innerHTML = "#Hello there.... Start typing here";
+  <% if(post) {%>
+    editor.getElement('editor').body.innerHTML = "<%= post.steps%>";
+  <% } %>
   var files = editor.getFiles();
   for (x in files) {
     console.log('File: ' + x); //Returns the name of each file

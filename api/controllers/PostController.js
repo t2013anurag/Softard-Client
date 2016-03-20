@@ -84,20 +84,14 @@ module.exports = {
 
 
 			allsteps = allsteps.replace(/ /g, '@@');
-			allsteps = allsteps.replace(/#/g,'{{');
+			allsteps = allsteps.replace(/#/g,'zaxs');
+			allsteps = allsteps.replace(/    /g,'4sp');
 			// 	url = url.replace(/ /g, '');
 		//  name = name.replace(/\.+/g, '.');
 		//  name = name.replace(/-+/g, '-');
 		//  name = name.replace(/_+/g, '_');
 
-			// var request = require('request');
-			// var url =  "http://localhost:1337/post/createpost?title="+title+"&shortdesc="+shortdesc+"&platform="+platform+"&tags="+tags+"&username="+username+"&name="+name+"&allsteps="+allsteps;
-			// console.log(url);
-			// request(url, function (error, response, body) {
-			//   if (!error && response.statusCode == 200) {
-			//     console.log(response);
-			//   }
-			// });
+
 			var url = "/post/createpost?title="+title+"&shortdesc="+shortdesc+"&platform="+platform+"&allsteps="+allsteps+"&tags="+tags+"&username="+username+"&name="+name;
 			console.log(url);
 			var http = require('http'), options = {
@@ -117,7 +111,6 @@ module.exports = {
 				response.on('end', function(){
 					var reply = data;
 					reply = JSON.parse(reply);
-					console.log(reply);
 					req.session.Post = reply.post;
 					if(reply.status === 302){
 						var reply = {
@@ -147,15 +140,23 @@ module.exports = {
 
 	'edit' : function(req, res) {
 		if(req.session.authenticated) {
+
 			var title = req.param('title');
 			var shortdesc = req.param('shortdesc');
 			var platform = req.param('platform');
 			var allsteps = req.param('allsteps');
-			var tags = req.param('tags');
+			/* Converting steps to array and adding a split string*/
+			var tags = req.param('tags');//receives in string
 			var username = req.session.User.username;
 			var name = req.session.User.name;
+			name = name.replace(/ /g, '-');
+			allsteps = allsteps.replace(/ /g, '@@');
+			allsteps = allsteps.replace(/#/g,'zaxs');
+			allsteps = allsteps.replace(/    /g,'4sp');
 			var id = req.param('id');
+
 			name = name.replace(/ /g, '-'); // escape sequence resolving
+
 			var http = require('http'), options = {
 				host: "localhost",
 				port: 1337,
@@ -173,8 +174,6 @@ module.exports = {
 				response.on('end', function(){
 					var reply = data;
 					reply = JSON.parse(reply);
-					req.session.Post = reply.post[0];
-					req.session.Post.id = req.session.Post.id;
 					if(reply.status === 213){
 						var reply = {
 							'status' : 802,
@@ -307,6 +306,49 @@ module.exports = {
 		}); // request finished
 	},
 
+	'editpost' : function(req, res) {
+			if(req.session.authenticated) {
+			var username = req.param('username');
+			var title = req.param('title');
+			var id = req.param('id');
+			var http = require('http'), options = {
+				host: "localhost",
+				port: 1337,
+				path: "/post/viewpostbyid?id="+id,
+				method: "GET"
+			};
+			var data = "";
+			var request = http.get(options, function(response){
+				response.on('error', function(){
+					console.log('error');
+				});
+				response.on('data', function(chunk){
+					data += chunk;
+				});
+				response.on('end', function(){
+					var reply = data;
+					reply = JSON.parse(reply);
+					if(reply.status === 207){
+						var post = reply.post;
+						res.view({post : post});
+					} else {
+						var reply = {
+						 'status' : 902,
+						 'message' : 'Could not fetch the post'
+					 };
+					 res.view({post : post});
+					}
+				});
+			}); // request finished
+		} else {
+			var reply = {
+				'status' : 1003,
+				'message' : 'Log in to edit post'
+			};
+			res.view(404);
+		}
+	},
+
 	'delete' : function(req, res) {
 		if(req.session.authenticated) {
 			var username = req.session.User.username;
@@ -328,18 +370,18 @@ module.exports = {
 				response.on('end', function(){
 					var reply = data;
 					reply = JSON.parse(reply);
-					if(reply.status === 207){
+					if(reply.status === 222){
 						var reply = {
 							'status' : 901,
 							'message' : 'The post has been deleted successfullly'
 						};
-						res.status(200).json(reply);
+						res.redirect('/viewall');
 					} else {
 						var reply = {
 						 'status' : 902,
 						 'message' : 'Could not fetch the post'
 					 };
-					 res.status(200).json(reply);
+					 res.redirect('/viewall');
 					}
 				});
 			}); // request finished
@@ -347,9 +389,9 @@ module.exports = {
 		} else {
 			var reply = {
 				'status' : 1003,
-				'messages' : 'Deleted the post successfullly'
+				'messages' : 'Please login'
 			};
-			res.status(200).json(reply);
+			res.redirect('/viewall');
 		}
 	}
 };
