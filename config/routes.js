@@ -59,6 +59,12 @@ module.exports.routes = {
       layout : 'ajaxLayout'
     }
   },
+  '/account-settings' : {
+    view : 'partial/account-settings',
+    locals : {
+      layout : 'ajaxLayout'
+    }
+  },
   '/create-post' : {
     view : 'partial/create-post'
   },

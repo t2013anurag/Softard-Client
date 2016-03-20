@@ -150,6 +150,45 @@ $( "#user-settings" ).on( 'click', "#send-complain" ,function() {
   });
 });
 
+$( "#user-settings" ).on( 'click', "#change-password" ,function() {
+    var password = $('#user-password').val();
+    var newpassword = $('#user-newpassword').val();
+    var cpassword = $('#user-cpassword').val();
+
+  if(!password || !cpassword || !newpassword)
+  {
+    $('#error-nofill').show();
+  } else if (newpassword != cpassword) {
+    $('#error-nofill').hide();
+    $('#password-mismtach-error').show();
+  } else {
+    $('#password-mismtach-error').hide();
+    $('#error-nofill').hide();
+    $.ajax({
+      type: 'POST',
+      url: '/user/updatepassword?',
+      data: { 'password' : password, 'newpassword' : newpassword},
+      dataType: 'json',
+      success: function(data) {
+        if(data.status === 301) {
+          var value = data.status;
+          var user = data.user;
+          var about1 = user.about;
+          $('#error-msg').hide();
+          $('#success-msg').show();
+        } else {
+          $('#error-msg').show();
+          $('#success-msg').hide();// to hide any previous success messages
+        }
+      },
+      error: function(data) {
+        $('#success-msg').hide();
+        $('#error-msg').show();
+      }
+  });
+  }
+});
+
 
 
 $("#profile-settings").click(function(){
@@ -158,6 +197,11 @@ $("#profile-settings").click(function(){
       });
 });
 
+$("#account-settings").click(function(){
+    $.get('/account-settings', function (template) {
+             $('#user-settings').html(template);
+      });
+});
 
 
 

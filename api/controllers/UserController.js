@@ -67,7 +67,6 @@ module.exports = {
 		var email = req.param('email');
 		var name = req.param('name');
 		var password = req.param('password');
-		console.log(username + email + password + name);
 
 		var http = require('http'), options = {
 			host: "localhost",
@@ -238,7 +237,7 @@ module.exports = {
 						 req.session.authenticated = true;
 						 req.session.User = reply.user[0];
 						 var callerreply = {
-							 'status' : 100,
+							 'status' : 201,
 							 'message' : 'Successfully updated the user details',
 							 'user' : reply.user[0]
 						 };
@@ -254,11 +253,62 @@ module.exports = {
 			 });
 		 } else {
 			 var callerreply = {
-				 'status' : 103,
+				 'status' : 203,
 				 'message' : 'Please login'
 			 };
 			 res.status(200).json(callerreply);
 		 }
+	 },
+
+	 'updatepassword' : function(req, res) {
+		 	if(req.session.authenticated) {
+				var password = req.param('password');
+				var newpassword = req.param('newpassword');
+				var username = req.session.User.username;
+				var http = require('http'), options = {
+					host : "localhost",
+					port : 1337,
+					path : "/user/update?username="+username+"&password="+password+"&newpassword="+newpassword,
+					method : "GET"
+				};
+
+				var data = "";
+
+				var request = http.get(options, function(response){
+					response.on('error', function(){
+						console.log('error');
+					});
+					response.on('data' , function(chunk){
+						data += chunk;
+					});
+					response.on('end', function(){
+						var reply = data;
+						reply = JSON.parse(reply);
+						if(reply.status === 1107) {
+							req.session.authenticated = true;
+							req.session.User = reply.user[0];
+							var callerreply = {
+								'status' : 301,
+								'message' : 'Successfully updated the user details',
+								'user' : reply.user[0]
+							};
+							res.status(200).json(callerreply);
+						}  else {
+							var callerreply = {
+								'status' : 302,
+								'message' : 'An error occured while updating the user details'
+							};
+							res.status(200).json(callerreply);
+						}
+					});
+				});
+			} else {
+				var callerreply = {
+					'status' : 303,
+					'message' : 'Please login to perform update password'
+				};
+				res.status(200).json(callerreply);
+			}
 	 }
 
 
