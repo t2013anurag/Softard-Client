@@ -50,7 +50,7 @@ a {
   color: #333;
 }
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
     color: #a94442;
 }
 a:focus {
@@ -79,14 +79,17 @@ p {
                   <div class="post-title"><p><%= post.shortdesc %></p></div>
                 </div>
                 <div class="form-group">
-                  <label for="tags">Tags : </label>
-                  <%= post.tags %>
+                    <label for="tags">Tags : </label>
+                  <% var count = 0; var tags = post.tags; %>
+                  <% _.each(tags, function(postx){ %>
+                    <div class="post-tags"><p><%= postx %></p></div>
+                    <% }); %>
                 </div>
                 <div class="form-group">
                   <label for="platform">Platform : </label>
                   <%= post.platform %>
                 </div>
-                <div id="inner_wrap"> <%= post.steps[1]  %>
+                <div id="inner_wrap">
                     <label for="steps">Steps : </label>
                     <% var count = 0; var steps = post.steps; %>
                     <% _.each(steps, function(postx){ %>
@@ -96,11 +99,11 @@ p {
               </td>
             </tr>
             <% } else {%>
-
-                <div class="alert alert-danger" id="error-msg">
-                  <strong>OOPS!</strong> Looks like it's lonely in here. Create you own post <a href="/create-post"> <span style="color:#a94442">here</span></a>.
-                </div>
-
+                 <a href="/create-post">
+                  <div class="alert alert-danger" id="error-msg">
+                    <strong>Duh!</strong> Are you sure someone created this post? Cause it looks it doesn't exist. Create you own post <span style="color:#a94442">here</span>.
+                  </div>
+                </a>
               <% }%>
           </tbody>
         </table>

@@ -10,7 +10,7 @@ $(document).ready(function(){
 	var i = $('input').size() + 1;
 	$('#add').click(function() {
 	//	$('<div><input type="text" class="field" name="dynamic[]" placeholder="hello " /></div>').fadeIn('slow').appendTo('.inputs');
-    	$('<div><textarea  class="field" name="dynamic[]" placeholder="hello " ></textarea></div>').fadeIn('slow').appendTo('.inputs');
+    	$('<div><textarea  class="field" name="dynamic[]" ></textarea></div>').fadeIn('slow').appendTo('.inputs');
 		i++;
 	});
 	$('#remove').click(function() {
@@ -44,12 +44,10 @@ $(document).ready(function(){
   var platform = $('#sel1').val();
   shortdesc = shortdesc.replace(/ /g,'-');
   title = title.replace(/ /g,'-');
-  var tagsarr = [];
-  tagsarr = tags.split(",");
   $.ajax({
     type: 'POST',
     url: '/post/create?',
-    data: { 'title' : title, 'shortdesc' : shortdesc, 'tags' : tagsarr, 'platform' : platform, 'allsteps' : allsteps },
+    data: { 'title' : title, 'shortdesc' : shortdesc, 'tags' : tags, 'platform' : platform, 'allsteps' : allsteps },
     dataType: 'json',
     success: function(data) {
       if(data.status === 800) {

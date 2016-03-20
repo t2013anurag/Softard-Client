@@ -11,15 +11,24 @@ module.exports = {
 			var title = req.param('title');
 			var shortdesc = req.param('shortdesc');
 			var platform = req.param('platform');
-			var allsteps = req.param('allsteps');
-			var tags = req.param('tags');
+
+			/* Converting steps to array and adding a split string*/
+			var steps = [];
+			steps = req.param('allsteps');
+			var newsteps = [];
+			_.each(steps, function(newstep){
+					newsteps.push(newstep+"azxsqwedc");
+			});
+			console.log(newsteps);
+
+			var tags = req.param('tags');//receives in string
 			var username = req.session.User.username;
 			var name = req.session.User.name;
 			name = name.replace(/ /g, '-');
 			var http = require('http'), options = {
 				host: "localhost",
 				port: 1337,
-				path: "/post/createpost?title="+title+"&shortdesc="+shortdesc+"&platform="+platform+"&allsteps="+allsteps+"&tags="+tags+"&username="+username+"&name="+name,
+				path: "/post/createpost?title="+title+"&shortdesc="+shortdesc+"&platform="+platform+"&allsteps="+newsteps+"&tags="+tags+"&username="+username+"&name="+name,
 				method: "GET"
 			};
 			var data = "";
