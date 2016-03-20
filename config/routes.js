@@ -85,7 +85,7 @@ module.exports.routes = {
   //   controller : 'PostController',
   //   action : 'view'
   // },
-  '/post/view/:username/:title/:id' : {
+  '/post/view/:username/:title' : {
     controller : 'PostController',
     action : 'view'
   },

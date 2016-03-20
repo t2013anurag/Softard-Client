@@ -306,5 +306,51 @@ module.exports = {
 				}
 			});
 		}); // request finished
+	},
+
+	'delete' : function(req, res) {
+		if(req.session.authenticated) {
+			var username = req.session.User.username;
+			var id = req.param('id');
+			var http = require('http'), options = {
+				host: "localhost",
+				port: 1337,
+				path: "/post/delete?username="+username+"&id="+id,
+				method: "GET"
+			};
+			var data = "";
+			var request = http.get(options, function(response){
+				response.on('error', function(){
+					console.log('error');
+				});
+				response.on('data', function(chunk){
+					data += chunk;
+				});
+				response.on('end', function(){
+					var reply = data;
+					reply = JSON.parse(reply);
+					if(reply.status === 207){
+						var reply = {
+							'status' : 901,
+							'message' : 'The post has been deleted successfullly'
+						};
+						res.status(200).json(reply);
+					} else {
+						var reply = {
+						 'status' : 902,
+						 'message' : 'Could not fetch the post'
+					 };
+					 res.status(200).json(reply);
+					}
+				});
+			}); // request finished
+
+		} else {
+			var reply = {
+				'status' : 1003,
+				'messages' : 'Deleted the post successfullly'
+			};
+			res.status(200).json(reply);
+		}
 	}
 };

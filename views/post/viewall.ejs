@@ -34,29 +34,28 @@
 </style>
 
 <div class="container">
-  <% if(req.session.authenticated) {%>
-  <% if(post_list.length > 0) {  %>
-  <% var count= 0; var counter = 0 %>
-  <% _.each(post_list, function(post){ %>
     <div class="two column">
         <table class="table">
           <thead>
               <tr>
-                <th><%= post.title %></th>
+                <th>All posts</th>
               </tr>
           </thead>
           <tbody>
             <tr>
+              <% if(req.session.authenticated) {%>
+              <% if(post_list.length > 0) {  %>
+              <% var count= 0; var counter = 0 %>
+              <% _.each(post_list, function(post){ %>
               <td>
-                <a href = "<%= post.title%>/view" ><span class="glyphicon glyphicon-file"></span>View</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href = "<%= post.title%>/edit" ><span class="glyphicon glyphicon-pencil"></span>Edit</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href = "<%= post.title%>/delete" ><span class="glyphicon glyphicon-remove"></span>Delete</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href = "/post/view/<%= post.username%>/<%= post.title%>" ><span class="glyphicon glyphicon-file"></span><%= post.title%></a>
               </td>
             </tr>
+          <% }); %>
           </tbody>
         </table>
     </div>
-    <% }); %>
+
     <% } else { %>
       <div class="two column">
           <table class="table">
