@@ -34,6 +34,7 @@
 </style>
 
 <div class="container">
+  <% if(req.session.authenticated) {%>
     <div class="two column">
         <table class="table">
           <thead>
@@ -43,12 +44,11 @@
           </thead>
           <tbody>
             <tr>
-              <% if(req.session.authenticated) {%>
               <% if(post_list.length > 0) {  %>
               <% var count= 0; var counter = 0 %>
               <% _.each(post_list, function(post){ %>
               <td>
-                <a href = "/post/view/<%= post.username%>/<%= post.title%>" ><span class="glyphicon glyphicon-file"></span><%= post.title%></a>
+                <a href = "/post/view/<%= post.username%>/<%= post.title%>/<%= post.id%>" ><span class="glyphicon glyphicon-file"></span><%= post.title%></a>
               </td>
             </tr>
           <% }); %>

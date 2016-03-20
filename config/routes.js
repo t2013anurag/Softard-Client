@@ -78,14 +78,11 @@ module.exports.routes = {
     controller : 'PostController',
     action : 'viewall'
   },
-  '/editor' : {
-    view:'partial/editor'
-  },
   // '/post/view/:title' : {
   //   controller : 'PostController',
   //   action : 'view'
   // },
-  '/post/view/:username/:title' : {
+  '/post/view/:username/:title/:id' : {
     controller : 'PostController',
     action : 'view'
   },

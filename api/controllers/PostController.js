@@ -234,7 +234,8 @@ module.exports = {
 										'platform' : post.platform,
 										'steps' : post.steps,
 										'tags' : post.tags,
-										'username' : post.username
+										'username' : post.username,
+										'id' : post.id
 									}
 									post_list.push(items);
 									count += 1;
@@ -294,9 +295,7 @@ module.exports = {
 				reply = JSON.parse(reply);
 				if(reply.status === 207){
 					var post = reply.post;
-					console.log(post);
 					res.view({post : post});
-
 				} else {
 					var reply = {
 					 'status' : 902,
