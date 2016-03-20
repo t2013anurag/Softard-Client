@@ -69,6 +69,82 @@ module.exports = {
 		}
 	},
 
+	'createpost' : function(req, res) {
+		if(req.session.authenticated) {
+			var title = req.param('title');
+			var shortdesc = req.param('shortdesc');
+			var platform = req.param('platform');
+			var allsteps = req.param('allsteps');
+			/* Converting steps to array and adding a split string*/
+
+			var tags = req.param('tags');//receives in string
+			var username = req.session.User.username;
+			var name = req.session.User.name;
+			name = name.replace(/ /g, '-');
+
+
+			allsteps = allsteps.replace(/ /g, '@@');
+			allsteps = allsteps.replace(/#/g,'{{');
+			// 	url = url.replace(/ /g, '');
+		//  name = name.replace(/\.+/g, '.');
+		//  name = name.replace(/-+/g, '-');
+		//  name = name.replace(/_+/g, '_');
+
+			// var request = require('request');
+			// var url =  "http://localhost:1337/post/createpost?title="+title+"&shortdesc="+shortdesc+"&platform="+platform+"&tags="+tags+"&username="+username+"&name="+name+"&allsteps="+allsteps;
+			// console.log(url);
+			// request(url, function (error, response, body) {
+			//   if (!error && response.statusCode == 200) {
+			//     console.log(response);
+			//   }
+			// });
+			var url = "/post/createpost?title="+title+"&shortdesc="+shortdesc+"&platform="+platform+"&allsteps="+allsteps+"&tags="+tags+"&username="+username+"&name="+name;
+			console.log(url);
+			var http = require('http'), options = {
+				host: "localhost",
+				port: 1337,
+				path: url,
+				method: "POST"
+			};
+			var data = "";
+			var request = http.get(options, function(response){
+				response.on('error', function(){
+					console.log('error');
+				});
+				response.on('data', function(chunk){
+					data += chunk;
+				});
+				response.on('end', function(){
+					var reply = data;
+					reply = JSON.parse(reply);
+					console.log(reply);
+					req.session.Post = reply.post;
+					if(reply.status === 302){
+						var reply = {
+							'status' : 800,
+							'message' : 'Successfully created the post',
+							'post' : reply.post
+						};
+						res.status(200).json(reply);
+					} else {
+						var reply = {
+						 'status' : 101,
+						 'message' : 'Could not create the post'
+					 };
+					 res.status(200).json(reply);
+					}
+				});
+			}); // request finished
+
+		} else {
+			var reply = {
+				'status' : 2,
+				'message' : 'You are not logged in'
+			};
+			res.status(200).json(reply);
+		}
+	},
+
 	'edit' : function(req, res) {
 		if(req.session.authenticated) {
 			var title = req.param('title');

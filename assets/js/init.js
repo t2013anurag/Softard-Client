@@ -6,36 +6,83 @@ $(document).ready(function(){
 });
 
 /* Creating dynamic post content*/
+// $(document).ready(function(){
+// 	var i = $('input').size() + 1;
+// 	$('#add').click(function() {
+// 	//	$('<div><input type="text" class="field" name="dynamic[]" placeholder="hello " /></div>').fadeIn('slow').appendTo('.inputs');
+//     	$('<div><textarea  class="field" name="dynamic[]" ></textarea></div>').fadeIn('slow').appendTo('.inputs');
+// 		i++;
+// 	});
+// 	$('#remove').click(function() {
+// 	if(i > 1) {
+// 		$('.field:last').remove();
+// 		i--;
+// 	}
+// 	});
+//   $('#reset').click(function() {
+// 	while(i > 2) {
+// 		$('.field:last').remove();
+// 		i--;
+// 	}
+// 	});
+// // here's our click function for when the forms submitted
+// 	$('.submit').click(function(){
+// 	var allsteps = [];
+//     $.each($('.field'), function() {
+//         var thisval = $(this).val();
+//         thisval = thisval.replace(/ /g,'-');
+//         allsteps.push(thisval);
+//     });
+//     if(allsteps.length == 0) {
+//         allsteps = "none";
+//     }
+//
+// 	//alert(allsteps);
+//   var title = $("#post-title").val();
+//   var shortdesc = $("#post-short").val();
+//   var tags = $("#post-tags").val();
+//   tags = tags.replace(/ /g, '');
+//   var platform = $('#sel1').val();
+//   shortdesc = shortdesc.replace(/ /g,'-');
+//   title = title.replace(/ /g,'-');
+//   $.ajax({
+//     type: 'POST',
+//     url: '/post/create?',
+//     data: { 'title' : title, 'shortdesc' : shortdesc, 'tags' : tags, 'platform' : platform, 'allsteps' : allsteps },
+//     dataType: 'json',
+//     success: function(data) {
+//       if(data.status === 800) {
+//         var value = data.status;
+//         $('#error-msg').hide();
+//         $('#success-msg').show();
+//         $('#user-name').val(""); //setting values to null
+//         $('#user-email').val("");
+//         $('#query').val("");
+//       } else {
+//         var value = data.status;
+//         $('#error-msg').show();
+//         $('#success-msg').hide();// to hide any previous success messages
+//       }
+//     },
+//     error: function(data) {
+//       var value = data.status;
+//       $('#success-msg').hide();
+//       $('#error-msg').show();
+//     }
+//   })
+//
+// 	return false;
+// 	});
+// });
+//
+
+
+
 $(document).ready(function(){
-	var i = $('input').size() + 1;
-	$('#add').click(function() {
-	//	$('<div><input type="text" class="field" name="dynamic[]" placeholder="hello " /></div>').fadeIn('slow').appendTo('.inputs');
-    	$('<div><textarea  class="field" name="dynamic[]" ></textarea></div>').fadeIn('slow').appendTo('.inputs');
-		i++;
-	});
-	$('#remove').click(function() {
-	if(i > 1) {
-		$('.field:last').remove();
-		i--;
-	}
-	});
-  $('#reset').click(function() {
-	while(i > 2) {
-		$('.field:last').remove();
-		i--;
-	}
-	});
+
 // here's our click function for when the forms submitted
 	$('.submit').click(function(){
-	var allsteps = [];
-    $.each($('.field'), function() {
-        var thisval = $(this).val();
-        thisval = thisval.replace(/ /g,'-');
-        allsteps.push(thisval);
-    });
-    if(allsteps.length == 0) {
-        allsteps = "none";
-    }
+
 	//alert(allsteps);
   var title = $("#post-title").val();
   var shortdesc = $("#post-short").val();
@@ -44,9 +91,11 @@ $(document).ready(function(){
   var platform = $('#sel1').val();
   shortdesc = shortdesc.replace(/ /g,'-');
   title = title.replace(/ /g,'-');
+  var allsteps = editor.getElement('editor').body.innerHTML;
+
   $.ajax({
     type: 'POST',
-    url: '/post/create?',
+    url: '/post/createpost?',
     data: { 'title' : title, 'shortdesc' : shortdesc, 'tags' : tags, 'platform' : platform, 'allsteps' : allsteps },
     dataType: 'json',
     success: function(data) {
@@ -54,9 +103,7 @@ $(document).ready(function(){
         var value = data.status;
         $('#error-msg').hide();
         $('#success-msg').show();
-        $('#user-name').val(""); //setting values to null
-        $('#user-email').val("");
-        $('#query').val("");
+        $('#post-published').hide();
       } else {
         var value = data.status;
         $('#error-msg').show();
@@ -73,6 +120,8 @@ $(document).ready(function(){
 	return false;
 	});
 });
+
+
 
 
 
@@ -232,7 +281,6 @@ $("#delete-account").click(function(){
              $('#user-settings').html(template);
       });
 });
-
 
 
   }); // end of document ready
