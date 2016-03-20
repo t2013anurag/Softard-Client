@@ -161,31 +161,33 @@ $( "#user-settings" ).on( 'click', "#change-password" ,function() {
   } else if (newpassword != cpassword) {
     $('#error-nofill').hide();
     $('#password-mismtach-error').show();
+  } else if(password === newpassword){
+    $('#same-password-error').show();
   } else {
-    $('#password-mismtach-error').hide();
-    $('#error-nofill').hide();
-    $.ajax({
-      type: 'POST',
-      url: '/user/updatepassword?',
-      data: { 'password' : password, 'newpassword' : newpassword},
-      dataType: 'json',
-      success: function(data) {
-        if(data.status === 301) {
-          var value = data.status;
-          var user = data.user;
-          var about1 = user.about;
-          $('#error-msg').hide();
-          $('#success-msg').show();
-        } else {
+      $('#password-mismtach-error').hide();
+      $('#error-nofill').hide();
+      $.ajax({
+        type: 'POST',
+        url: '/user/updatepassword?',
+        data: { 'password' : password, 'newpassword' : newpassword},
+        dataType: 'json',
+        success: function(data) {
+          if(data.status === 301) {
+            var value = data.status;
+            var user = data.user;
+            var about1 = user.about;
+            $('#error-msg').hide();
+            $('#success-msg').show();
+          } else {
+            $('#error-msg').show();
+            $('#success-msg').hide();// to hide any previous success messages
+          }
+        },
+        error: function(data) {
+          $('#success-msg').hide();
           $('#error-msg').show();
-          $('#success-msg').hide();// to hide any previous success messages
         }
-      },
-      error: function(data) {
-        $('#success-msg').hide();
-        $('#error-msg').show();
-      }
-  });
+    });
   }
 });
 
