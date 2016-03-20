@@ -65,6 +65,12 @@ module.exports.routes = {
       layout : 'ajaxLayout'
     }
   },
+  '/delete-account' : {
+    view : 'partial/delete-account',
+    locals : {
+      layout : 'ajaxLayout'
+    }
+  },
   '/create-post' : {
     view : 'partial/create-post'
   },

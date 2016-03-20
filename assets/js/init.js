@@ -191,6 +191,28 @@ $( "#user-settings" ).on( 'click', "#change-password" ,function() {
   }
 });
 
+$( "#user-settings" ).on( 'click', "#delete-account" ,function() {
+      $.ajax({
+        type: 'POST',
+        url: '/user/delete',
+        data: {},
+        dataType: 'json',
+        success: function(data) {
+          if(data.status === 401) {
+            var value = data.status;
+            $('#error-msg').hide();
+            $('#success-msg').show();
+          } else {
+            $('#error-msg').show();
+            $('#success-msg').hide();// to hide any previous success messages
+          }
+        },
+        error: function(data) {
+          $('#success-msg').hide();
+          $('#error-msg').show();
+        }
+    });
+});
 
 
 $("#profile-settings").click(function(){
@@ -201,6 +223,12 @@ $("#profile-settings").click(function(){
 
 $("#account-settings").click(function(){
     $.get('/account-settings', function (template) {
+             $('#user-settings').html(template);
+      });
+});
+
+$("#delete-account").click(function(){
+    $.get('/delete-account', function (template) {
              $('#user-settings').html(template);
       });
 });

@@ -84,7 +84,6 @@ module.exports = {
 			});
 			response.on('end', function(){
 				var reply = data;
-				console.log(reply);
 				reply = JSON.parse(reply);
 				if(reply.status === 111){
 					var user = reply.user;
@@ -309,6 +308,52 @@ module.exports = {
 				};
 				res.status(200).json(callerreply);
 			}
+	 },
+
+	 'delete' : function(req, res) {
+		 if(req.session.authenticated) {
+			 var username = req.session.User.username;
+			 var http = require('http'), options = {
+				 host : "localhost",
+				 port : 1337,
+				 path : "/user/deleteuser?username="+username,
+				 method : "GET"
+			 };
+			 var data = "";
+			 var request = http.get(options, function(response){
+				 response.on('error', function(){
+					 console.log('error');
+				 });
+				 response.on('data' , function(chunk){
+					 data += chunk;
+				 });
+				 response.on('end', function(){
+					 var reply = data;
+					 reply = JSON.parse(reply);
+					 if(reply.status === 118) {
+						 req.session.destroy();
+						 var callerreply = {
+							 'status' : 401,
+							 'message' : 'Successfully deleted the user account',
+							 'user' : reply.user
+						 };
+						 res.status(200).json(callerreply);
+					 }  else {
+						 var callerreply = {
+							 'status' : 402,
+							 'message' : 'An error occured while deleting the user'
+						 };
+						 res.status(200).json(callerreply);
+					 }
+				 });
+			 });
+		 } else {
+			 	var callerreply = {
+					'status' : 403,
+					'message' : 'Please login before you perform delete action'
+				};
+				res.status(200).json(callerreply);
+		 }
 	 }
 
 
