@@ -39,9 +39,9 @@ module.exports.routes = {
   '/login/signup' : 'UserController.signup',
   '/file/upload' : 'UserController.uploadphoto',
   '/sendsms' : 'LoginController.sendsms',
-  '/profile' : {
-    view : 'partial/dashboard'
-  },
+  // '/profile' : {
+  //   view : 'partial/dashboard'
+  // },
   '/home' : {
     view : 'index'
   },
@@ -94,6 +94,9 @@ module.exports.routes = {
     controller : 'PostController',
     action : 'editpost'
   },
+  '/allpost' : {
+    view : 'partial/allpost'
+  }
 
   /***************************************************************************
   *                                                                          *

@@ -1,9 +1,10 @@
-Before installing client make sure you clone the server repo from :
-https://t2013anurag@bitbucket.org/t2013anurag/softard.git
+Download the zip file for both client and server from onedrive :
+Link :
+
 
 ```sh
 $ sudo npm install
-After installing all dependencies : 
+After installing all dependencies :
 # Get the latest stable release of Sails
 $ cd softard/
 $ sails lift
@@ -17,15 +18,13 @@ Now we have the server up and running, we need to install client.
 
 a [Sails](http://sailsjs.org) application
 
-https://t2013anurag@bitbucket.org/t2013anurag/softardclient.git : Clone the repo from here.
-
 ## Installation &nbsp;
 **With [node](http://nodejs.org) [installed](http://sailsjs.org/#!documentation/new-to-nodejs):**
 ```sh
 # Get the latest stable release of Sails
 $ sudo npm install
 ```
-After installing all dependencies: 
+After installing all dependencies:
 ```sh
 # Get the latest stable release of Sails
 $ cd softardclient/
@@ -36,4 +35,4 @@ The server by default runs on post 5000.
 Go to http://localhost:5000
 You will see the homepage. Note : you need to create your posts and perform all operations.
 You have successfully installed the server and client.
-The live preview is available here :
+The live preview is available here : softard.cloudapp.net:5000

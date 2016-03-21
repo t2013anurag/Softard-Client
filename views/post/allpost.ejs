@@ -1,0 +1,101 @@
+<style>
+.nav-li>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 44px;
+}
+.nav-tabs {
+      margin-left: -63px;
+}
+.table {
+      border: 2px solid #ddd;
+}
+.table>tbody>tr>td{
+  padding: 11px;
+}
+.glyphicon {
+  margin-right: 10px;
+}
+.badge {
+  margin-left: 10px;
+}
+.table>thead>tr>th {
+  text-align: center;
+  padding: 3px;
+  font-size: 19px;
+  background: #ddd;
+  color: #777;
+}
+.post-content {
+  margin-top: 40px;
+  padding: 10px;
+  border: 2px solid #ddd;
+}
+</style>
+
+<div class="container">
+
+    <div class="two column">
+        <table class="table">
+          <thead>
+              <tr>
+                <th>All posts</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <% if(post_list.length > 0) {  %>
+              <% var count= 0; var counter = 0 %>
+              <% _.each(post_list, function(post){ %>
+              <td>
+                <a href = "/post/view/<%= post.username%>/<%= post.title%>/<%= post.id%>" ><span class="glyphicon glyphicon-file"></span><%= post.title%></a>
+              </td>
+            </tr>
+          <% }); %>
+          </tbody>
+        </table>
+    </div>
+
+    <% } else { %>
+      <div class="two column">
+          <table class="table">
+            <thead>
+                <tr>
+                  <th>It's lonely in here</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <a href = "/create-post" ><span class="glyphicon glyphicon-file"></span>Create your first post</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      <% } %>
+
+    <div class="one column" style="position: absolute;left: 63%;width: 25%;">
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th>Love Brownies?</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-hand-right"></span>You can directly edit you post by clicking on it. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Sharing is caring. Share your post on social feeds in a click.<br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Developers Hall of Fame. Let's see if you can make it to the list.<br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Lines don't matter.<br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Add suitable tags to make your work visible to more and more developers. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Raise issues, questions if you have any. <br><br>
+              <span class="glyphicon glyphicon-hand-right"></span>Answering queries boosts your progress. <br><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
