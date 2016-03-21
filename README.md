@@ -34,8 +34,6 @@ $ sails lift
 The server by default runs on post 5000.
 
 Go to http://localhost:5000
-You will see the homepage..
+You will see the homepage. Note : you need to create your posts and perform all oprations.
 You have successfully installed the server and client.
-The live preview is available here : 
-
-
+The live preview is available here :
