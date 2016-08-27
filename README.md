@@ -1,4 +1,3 @@
-Download the zip file for both client and server from onedrive :
 Link :
 
 
